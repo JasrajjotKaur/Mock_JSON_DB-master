@@ -39,4 +39,41 @@ async function createUser(req, res){
 
 }
 
+
+//async function to update user
+async function updateUser(req, res){
+
+    try{
+        const data = await readData();
+
+        //finder function to find the user by id
+        const user = data.users.find(user => user.id === req.params.id);
+
+        //update the user object field with values from the req.body (form data income )
+        if(user){
+            user.username = req.body.new_username || user.username;
+            user.first_name = req.body.new_first_name || user.first_name;
+            user.email = req.body.new_email || user.email;
+
+            await writeData(data);
+
+            res.status(200).json('User added successfully!');
+
+
+
+        }
+
+    } catch (error){
+
+
+    }
+
+
+}
+
+
+
+
+
+
 module.exports = {createUser};
